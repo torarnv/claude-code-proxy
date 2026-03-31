@@ -293,11 +293,13 @@ func (h *Handler) handleStreamingResponse(w http.ResponseWriter, resp *http.Resp
 			}
 		}
 
+		if line != "" {
+			streamingChunks = append(streamingChunks, line)
+		}
+
 		if !strings.HasPrefix(line, "data:") {
 			continue
 		}
-
-		streamingChunks = append(streamingChunks, line)
 
 		jsonData := strings.TrimPrefix(line, "data: ")
 
